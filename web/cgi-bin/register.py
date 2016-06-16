@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import MySQLdb
 import cgi, cgitb
+from connectdb import connectDB
 cgitb.enable()
 
 def manageError(cod, message):
@@ -17,7 +18,7 @@ e_mail=form.getvalue('e_mail')
 password=form.getvalue('password')
 amount=form.getvalue('amount')
 
-db = MySQLdb.connect("localhost","root","cristi79","banksafe")
+db = connectDB()
 
 cursor = db.cursor()
 
