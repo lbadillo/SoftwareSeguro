@@ -13,12 +13,12 @@ CREATE TABLE `client` (
   `email` varchar(150) NOT NULL,
   `password` varchar(150) NOT NULL,
   `amount` float NOT NULL,
-  `consecutive` int(11) NOT NULL DEFAULT '1',
+  `consecutive` int(11) NOT NULL DEFAULT '0',
   `maxCode` int(11) NOT NULL DEFAULT '100',
   `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:registrada  1:aprobada  2:negada',
   PRIMARY KEY (`idClient`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
 
 DROP TABLE IF EXISTS `employee`;
@@ -46,7 +46,14 @@ CREATE TABLE `transactions` (
   KEY `idClientTo` (`idClientTo`),
   CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`idClientFrom`) REFERENCES `client` (`idClient`),
   CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`idClientTo`) REFERENCES `client` (`idClient`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 
 
--- 2016-06-15 22:38:11
+DROP VIEW IF EXISTS `vw_transactionlist`;
+CREATE TABLE `vw_transactionlist` (`idClient` bigint(20), `Code` varchar(100), `Type` varchar(13), `Amount` float, `Origin` varchar(301), `Destination` varchar(301), `State` varchar(10));
+
+
+DROP TABLE IF EXISTS `vw_transactionlist`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vw_transactionlist` AS select `t`.`idClientFrom` AS `idClient`,`t`.`codeTransaction` AS `Code`,(case `t`.`typeTransaction` when 0 then 'Consignacion' when 1 then 'Retiro' when 2 then 'Transferencia' end) AS `Type`,`t`.`amount` AS `Amount`,concat(`clf`.`name`,' ',`clf`.`lastName`) AS `Origin`,concat(`clt`.`name`,' ',`clt`.`lastName`) AS `Destination`,(case `t`.`state` when 0 then 'Registrada' when 1 then 'Aprobada' when 2 then 'Negada' end) AS `State` from ((`transactions` `t` join `client` `clf` on((`t`.`idClientFrom` = `clf`.`idClient`))) left join `client` `clt` on((`t`.`idClientTo` = `clt`.`idClient`)));
+
+-- 2016-06-17 19:47:24
