@@ -1,25 +1,28 @@
 #!/usr/bin/python
 import cgi, cgitb
-from constants import getClientCookie
+import constants 
 cgitb.enable()
 
 
 respon = "Usuario No Registrado"
-idClient = getClientCookie()
+idClient = constants.getClientCookie()
 
-print "Content-type: text/html\r\n\r\n"
-print "<!DOCTYPE html>"  
-print '<html>'
-print '<head>'
-print '<title>Listado Transacciones</title>'
-print '</head>'
-print '<body>'
+constants.getHeaderHtml( "Opciones Cliente")
+print '<div class="well">'
 if idClient!="0":
-  print "<a href = 'listrans.py'> Ver listado de Transacciones</a><br>"
-  print "<a href = 'newtrans.py'> Hacer una Transaccion</a>"
+  
+  print '<div class="list-group margin-b-3">'
+  print '<a href="#" class="active list-group-item"><h3>Acciones</h3></a>'
+  print "<a href = 'listrans.py' class='list-group-item'><h4> Ver listado de Transacciones</h4></a>"
+  print "<a href = 'newtrans.py' class='list-group-item'><h4> Hacer una Transaccion</h4></a>"
+  print "<a href = '../uploadfile.html' class='list-group-item'><h4> Generar Transacciones Batch</h4></a>"
+  print '</div>'
+  
 else:
-  print "<h2>%s</h2><br>" %(respon)
+  print "<h3>%s</h3><br>" %(respon)
   print "<a href = '../loginclient.html'> Login Cliente </a>"
+print '</div>'  
+constants.getFooterHtml()  
 print '</body>'
 print '</html>'
 

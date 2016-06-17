@@ -17,14 +17,18 @@
     <div class="row">
       <div class="col-sm-12">
 	<div class="page-header">
-	  <h1>Menu Inicio </h1>
+	  <h1>Subir Archivo </h1>
 	</div>
       </div>
     </div>
-    <div class="list-group margin-b-3">
-      <a href="#" class="active list-group-item"><h3>Usuarios</h3></a>
-      <a href="loginclient.html" class="list-group-item"><h3>Cliente</h3></a>
-      <a href="#" class="list-group-item"><h3>Banco</h3></a>
+    <div class="well">
+      <form  enctype="multipart/form-data" action="/cgi-bin/savefile.py" method="post">
+	<div class="form-group">
+	  <label>File</label>
+	  <input type="file" name="filename" class="file-loading" /></p>
+	</div>	
+	<input type="submit" value="Enviar" class="btn btn-default" />
+      </form>
     </div>
     
   </div>

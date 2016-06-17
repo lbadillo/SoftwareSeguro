@@ -5,7 +5,7 @@ import crypt
 import os
 import Cookie
 from connectdb import connectDB
-from constants import getSalt
+import constants
 cgitb.enable()
 
 
@@ -15,7 +15,7 @@ form = cgi.FieldStorage()
 
 e_mail=form.getvalue('e_mail')
 password=form.getvalue('password')
-passcript= crypt.crypt(password,getSalt())
+passcript= crypt.crypt(password,constants.getSalt())
 respon = "no"
 idClient = 0
 
@@ -50,14 +50,9 @@ if idClient>0:
   print c 
   print "Location: clientoptions.py\r\n"
 else:
-  print "Content-type: text/html\r\n\r\n"
-  print "<!DOCTYPE html>"
-  print '<html>'
-  print '<head>'
-  print '<title>Error</title>'
-  print '</head>'
-  print '<body>'
-  print "<h2>%s</h2><br>" %(respon)
+  constants.getHeaderHtml( "Control Usuarios")
+  print "<h4>%s</h4><br>" %(respon)
+  constants.getFooterHtml() 
   print "<a href = '../loginclient.html'> Login Cliente </a>"
   print '</body>'
   print '</html>'

@@ -1,33 +1,27 @@
 #!/usr/bin/python
 import MySQLdb
 import cgi, cgitb
-from constants import getClientCookie
+import constants 
 from connectdb import connectDB
 
 cgitb.enable()
 
-idClient = getClientCookie()
+idClient = constants.getClientCookie()
 respon ="Usuario No Registrado"
 
     
-print "Content-type: text/html\r\n\r\n"
-print "<!DOCTYPE html>"  
-print '<html>'
-print '<head>'
-print '<title>Listado Transacciones</title>'
-print '</head>'
-print '<body>'
+constants.getHeaderHtml( "Transacciones")
 if idClient != "0":
   db = connectDB()
   cursor = db.cursor()
   
-  sql = "select Code, Type, Amount, Origin, Destination, State from vw_transactionlist where idclient = '%s' "  % (idClient)
+  sql = "select Code as Codigo, Amount as Valor, Origin as Origen, Destination as Destino, State as Estado from vw_transactionlist where idclient = '%s' "  % (idClient)
   try:
     cursor.execute(sql)
     results = cursor.fetchall()
     num_fileds = len(cursor.description)
     field_names = [i[0] for i in cursor.description]
-    print '<table>'
+    print '<table class="table table-hover">'
     print '<tr>'
     for names in field_names:
        print "<th>%s</th>" % (names)
@@ -50,6 +44,7 @@ if idClient != "0":
 else:    
   print '<h2> %s</h2><br>' % (respon) 
   print "<a href = '../loginclient.html'> Volver a login</a>"
+constants.getFooterHtml()    
 print '</body>'
 print '</html>'
 

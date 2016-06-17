@@ -1,12 +1,12 @@
 #!/usr/bin/python
 import MySQLdb
 import cgi, cgitb
-from constants import getClientCookie
+import constants 
 from connectdb import connectDB
 
 cgitb.enable()
 
-idClient = getClientCookie()
+idClient = constants.getClientCookie()
 respon ="Usuario No Registrado"
 form = cgi.FieldStorage()
 codeTran = form.getvalue('codeTran')
@@ -17,15 +17,9 @@ balance = float(form.getvalue('balance'))
 sql2="ok"
 state="0"
 amount2 = "-101"
-if idClient != "0":
-  respon = "No se pudo realizar la Transaccion"
-  print "Content-type: text/html\r\n\r\n"
-  print "<!DOCTYPE html>"  
-  print '<html>'
-  print '<head>'
-  print '<title>Nueva Transaccion</title>'
-  print '</head>'
-  print '<body>'
+respon = "No se pudo realizar la Transaccion"
+constants.getHeaderHtml( "Registrar Transaccion")
+if idClient != "0":  
   db = connectDB()
   cursor = db.cursor()
   if amount<10000:
@@ -36,6 +30,7 @@ if idClient != "0":
     respon = "Fondos Insuficientes para esta transaccion"
   else:
     sql3 ="select amount from client where state = 1 and idclient = %s"%(destination)
+    
     try:
       cursor.execute(sql3)
       row = cursor.fetchone()
@@ -67,11 +62,13 @@ if idClient != "0":
       except MySQLdb.Error, e:
 	db.rollback()
 	respon = "No se pudo realizar la Transaccion:%s"%e.args[1]
-	  
-  print '<h2> %s</h2>' % (respon)     
-  print "<a href = 'newtrans.py'> Volver a transacciones </a>"
-  print '</body>'
-  print '</html>'
+print '<div class="well">' 
+print '<h4> %s</h4>' % (respon) 
+print '</div>'
+print "<a href = 'newtrans.py'> Volver a transacciones </a>"
+constants.getFooterHtml()   
+print '</body>'
+print '</html>'
 
 db.close()
 

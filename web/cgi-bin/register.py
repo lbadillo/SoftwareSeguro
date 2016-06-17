@@ -3,7 +3,7 @@ import MySQLdb
 import cgi, cgitb
 import crypt
 from connectdb import connectDB
-from constants import getSalt
+import constants
 cgitb.enable()
 
 def manageError(cod, message):
@@ -18,7 +18,7 @@ first_name=form.getvalue('first_name')
 last_name=form.getvalue('last_name')
 e_mail=form.getvalue('e_mail')
 password=form.getvalue('password')
-passcript= crypt.crypt(password,getSalt())
+passcript= crypt.crypt(password,constants.getSalt())
 amount=form.getvalue('amount')
 
 db = connectDB()
@@ -39,25 +39,18 @@ except MySQLdb.Error, e:
   db.rollback()
   respon= manageError(e.args[0], e.args[1])
   respcod=e.args[0]
-
-
-
   
-print "Content-type: text/html\r\n\r\n";
-print '<html>'
-print '<head>'
-print '<title>Registro Cliente</title>'
-print '</head>'
-print '<body>'
-print '<h2> %s</h2>' % (respon)
+constants.getHeaderHtml( "Nuevo Cliente")
+print '<div class="well">'
+print '<h3> %s</h3>' % (respon)
 if respcod == 0:
-   print "<a href = '../loginclient.html'> Volver a login</a>"
+   print "<a href = '../loginclient.html'> Ir a login</a>"
  
 else:
    print "<a href = '../register.html'> Volver a registro</a>"
-  
+print '</div>'  
  
-  
+constants.getFooterHtml()  
 print '</body>'
 print '</html>'
 
