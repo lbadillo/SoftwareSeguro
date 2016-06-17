@@ -1,7 +1,9 @@
 #!/usr/bin/python
 import MySQLdb
 import cgi, cgitb
+import crypt
 from connectdb import connectDB
+from constants import getSalt
 cgitb.enable()
 
 def manageError(cod, message):
@@ -16,6 +18,7 @@ first_name=form.getvalue('first_name')
 last_name=form.getvalue('last_name')
 e_mail=form.getvalue('e_mail')
 password=form.getvalue('password')
+passcript= crypt.crypt(password,getSalt())
 amount=form.getvalue('amount')
 
 db = connectDB()
@@ -25,7 +28,7 @@ cursor = db.cursor()
 
 
 
-sql = "insert into client (name,lastName,email,password, amount,state) values ('%s','%s','%s','%s','%s','%d') " % (first_name,last_name,e_mail,password,amount,0)
+sql = "insert into client (name,lastName,email,password, amount,state) values ('%s','%s','%s','%s','%s','%d') " % (first_name,last_name,e_mail,passcript,amount,0)
 
 try:
   cursor.execute(sql)
@@ -48,7 +51,7 @@ print '</head>'
 print '<body>'
 print '<h2> %s</h2>' % (respon)
 if respcod == 0:
-   print "<a href = '../index.html'> Volver a login</a>"
+   print "<a href = '../loginclient.html'> Volver a login</a>"
  
 else:
    print "<a href = '../register.html'> Volver a registro</a>"
