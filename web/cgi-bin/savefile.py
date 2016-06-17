@@ -19,18 +19,22 @@ if idClient != "0":
     
     fn = os.path.basename(fileitem.filename.replace("\\","/"))
     open ('/var/www/cgi-bin/' + fn, 'wb' ).write (fileitem.file.read())
-    p = subprocess.Popen(['chmod','777', '/var/www/cgi-bin/' + fn], stdout=subprocess.PIPE)
-    out, err = p.communicate()
-    if err is None:
-      p2 = subprocess.Popen(['./main',idClient], stdout=subprocess.PIPE)
-      out2, err2 = p2.communicate()
-      if err2 is None:
-	
-	respon = 'Transacciones Generadas Satisfactoriamente'
-      else:
-	respon = err2
+    p0= subprocess.Popen(['mv', '/var/www/cgi-bin/' + fn, '/var/www/cgi-bin/transacciones.txt'], stdout=subprocess.PIPE)
+    out0, err0 = p0.communicate()
+    if err0 is None:
+        p = subprocess.Popen(['chmod','777', '/var/www/cgi-bin/transacciones.txt'], stdout=subprocess.PIPE)
+        out, err = p.communicate()
+        if err is None:
+            p2 = subprocess.Popen(['./main',idClient], stdout=subprocess.PIPE)
+            out2, err2 = p2.communicate()
+            if err2 is None:
+                respon = 'Transacciones Generadas Satisfactoriamente'
+            else:
+                respon = err2
+        else:
+            respon = err
     else:
-      respon = err
+        respon = err0        
   
 print '<div class="well">' 
 print '<h4> %s</h4>' % (respon) 
