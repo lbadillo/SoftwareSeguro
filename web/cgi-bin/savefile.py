@@ -19,16 +19,16 @@ if idClient != "0":
     
     fn = os.path.basename(fileitem.filename.replace("\\","/"))
     open ('/var/www/cgi-bin/' + fn, 'wb' ).write (fileitem.file.read())
-    p0= subprocess.Popen(['mv', '/var/www/cgi-bin/' + fn, '/var/www/cgi-bin/transacciones.txt'], stdout=subprocess.PIPE)
+    p0= subprocess.Popen(['mv', '/var/www/cgi-bin/' + fn, '/var/www/cgi-bin/Transacciones.txt'], stdout=subprocess.PIPE)
     out0, err0 = p0.communicate()
     if err0 is None:
-        p = subprocess.Popen(['chmod','777', '/var/www/cgi-bin/transacciones.txt'], stdout=subprocess.PIPE)
+        p = subprocess.Popen(['chmod','777', '/var/www/cgi-bin/Transacciones.txt'], stdout=subprocess.PIPE)
         out, err = p.communicate()
         if err is None:
             p2 = subprocess.Popen(['./main',idClient], stdout=subprocess.PIPE)
             out2, err2 = p2.communicate()
             if err2 is None:
-                respon = 'Transacciones Generadas Satisfactoriamente'
+                respon = out2
             else:
                 respon = err2
         else:
@@ -37,7 +37,9 @@ if idClient != "0":
         respon = err0        
   
 print '<div class="well">' 
-print '<h4> %s</h4>' % (respon) 
+respon = respon.replace("\n","<br>")
+respon = respon.replace("\t","-- ")
+print '%s' % (respon) 
 print '</div>'
 print "<a href = 'clientoptions.py'> Volver a opciones </a>"
 constants.getFooterHtml()   
