@@ -1,3 +1,3 @@
-Valor		Cliente Destino
+Valor		Cliente Destino (e-mail)
 20		dos@dos.com
-30		cuatro@dos.com
+30		cuatro@cuatro.com
