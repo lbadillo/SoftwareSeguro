@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>New Client</title>
+<title>Login  Empleador</title>
 </head>
 <body>
-<form action="./cgi-bin/empregister.py" method="post">
-First name:  <input type="text" name="first_name" required />
-<br>
-Last name:  <input type="text" name="last_name" required />
-<br>
+<form action="./loginemployee.py" method="post">
+
 E-Mail:  <input type="email" name="e_mail" required/>
 <br>
 Password:  <input type="password" name="password" required  />
+
 <br>
 <input type="submit" value="submit" />
+<br>
+
+<a href = "empregister.html"> Registrar un Nuevo Empleador </a>
 </form>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <title>New Client</title>
 </head>
 <body>
-<form action="./cgi-bin/empregister.py" method="post">
+<form action="./empregister.py" method="post">
 First name:  <input type="text" name="first_name" required />
 <br>
 Last name:  <input type="text" name="last_name" required />
