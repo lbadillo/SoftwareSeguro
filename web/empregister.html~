@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>New Client</title>
+</head>
+<body>
+<form action="./cgi-bin/empregister.py" method="post">
+First name:  <input type="text" name="first_name" required />
+<br>
+Last name:  <input type="text" name="last_name" required />
+<br>
+E-Mail:  <input type="email" name="e_mail" required/>
+<br>
+Password:  <input type="password" name="password" required  />
+<br>
+<input type="submit" value="submit" />
+</form>
+</body>
+</html>

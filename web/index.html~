@@ -24,7 +24,7 @@
     <div class="list-group margin-b-3">
       <a href="#" class="active list-group-item"><h3>Usuarios</h3></a>
       <a href="loginclient.html" class="list-group-item"><h3>Cliente</h3></a>
-      <a href="emplogin.html" class="list-group-item"><h3>Banco</h3></a>
+      <a href="emplogin.html" class="list-group-item"><h3>Bancorr</h3></a>
     </div>
     
   </div>

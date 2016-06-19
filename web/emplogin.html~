@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/styles.css">
+<title>Bank Safe</title>
+</head>
+<body>
+  <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+	  <a class="navbar-brand" href="#">SafeBank</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+	<div class="page-header">
+	  <h1>Login Empleado </h1>
+	</div>
+      </div>
+    </div>
+    <div class="well">
+      <form action="/cgi-bin/loginemployee.py" method="post">
+      <div class="form-group">
+	  <label>Correo Electronico</label>  
+	  <input type="email" name="e_mail" class="form-control" required/>
+      </div>
+      
+      <div class="form-group">
+	<label>Clave</label> 
+	<input type="password" name="password" class="form-control" required  />
+      </div>
+      <input type="submit" value="Enviar" class="btn btn-default"/>
+    </div>
+
+<a href = "empregister.html"> Registrar un Nuevo Empleado </a>
+</div>
+</form>
+</body>
+</html>

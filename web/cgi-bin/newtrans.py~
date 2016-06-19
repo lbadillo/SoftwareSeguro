@@ -40,8 +40,8 @@ if idClient != "0":
         print '</div>'
         
         print '<div class="form-group">'
-        print '  <label>Usuario Destino</label>' 
-        print '  <input type="text" name="destination" required class="form-control" />'
+        print '  <label>Cuenta Destino</label>' 
+        print '  <input type="number" name="destination" required class="form-control" />'
         print '</div>'
         
         print '<div class="form-group">'

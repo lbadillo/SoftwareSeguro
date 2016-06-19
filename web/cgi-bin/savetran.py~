@@ -57,6 +57,11 @@ if idClient != "0":
 	respon = "Transaccion [%s] exitosa: Pendiente por aprobacion"%codeTran      
       try:
 	if str(idClient2) != str(idClient):
+	  print "cliente 2"
+	  print '++%s++'%idClient2
+	  print "cliente 1"
+	  print '++%s++'%idClient
+	  
 	  cursor.execute(sql)
 	  cursor.execute(sql2)
 	  cursor.execute(sql4)

@@ -20,18 +20,6 @@ def getClientCookie():
       idClient="0"
   return idClient  
   
-def getEmployeeCookie():
-  idClient="0"
-  if 'HTTP_COOKIE' in os.environ:
-    cookie_string = os.environ.get('HTTP_COOKIE')
-    c = Cookie.SimpleCookie()
-    c.load(cookie_string)
-    try:
-      idClient=c['idemployee'].value
-    except KeyError:
-      idClient="0"
-  return idClient  
-  
 def getHeaderHtml(title):
   print "Content-type: text/html\r\n\r\n";
   print '<html>'
