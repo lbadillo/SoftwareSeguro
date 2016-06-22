@@ -15,7 +15,7 @@ if idClient!="0":
   
   db = connectDB()
   cursor = db.cursor()
-  cursor.execute("SELECT * FROM transactions t JOIN client cf ON t.idClientFrom = cf.idClient JOIN client ct ON t.idClientTo = ct.idClient WHERE t.state = 0")
+  cursor.execute("SELECT t.idtransaction, t.codeTransaction,cf.name,cf.lastname, ct.name,ct.lastname, t.amount FROM transactions t JOIN client cf ON t.idClientFrom = cf.idClient JOIN client ct ON t.idClientTo = ct.idClient WHERE t.state = 0")
   # fetch all of the rows from the query
   data = cursor.fetchall()
 
@@ -32,11 +32,11 @@ if idClient!="0":
   for row in data:
     print '<tr>'
     print '<td>' + row[1] + '</td>'
-    print '<td>' + row[8] + '</td>'
-    print '<td>' + row[9] + '</td>'
-    print '<td>' + row[17] + '</td>'
-    print '<td>' + row[18] + '</td>'
-    print '<td>' + str(row[3]) + '</td>'
+    print '<td>' + row[2] + '</td>'
+    print '<td>' + row[3] + '</td>'
+    print '<td>' + row[4] + '</td>'
+    print '<td>' + row[5] + '</td>'
+    print '<td>' + str(row[6]) + '</td>'
     print "<td><a href='transactionupdate.py?tid=" + str(row[0]) + "&sta=1'>Appove</a>"
     print '<br/>'
     print "<a href='transactionupdate.py?tid=" + str(row[0]) + "&sta=2'>Reject</a></td>"

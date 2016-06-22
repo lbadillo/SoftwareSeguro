@@ -15,7 +15,7 @@ if idClient != "0":
   db = connectDB()
   cursor = db.cursor()
   
-  sql = "select consecutive, maxcode, amount from client where idclient = '%s' "  % (idClient)
+  sql = "select consecutive, maxcode from client where idclient = '%s' "  % (idClient)
   try:
     cursor.execute(sql)
     row = cursor.fetchone()
@@ -23,20 +23,21 @@ if idClient != "0":
     if row is not None:
       cons = int(row[0])
       maxval = int(row[1])
-      balance = row[2]
+      
       if cons>=maxval:
 	print '<h2>No hay codigos de transacciones disponibles</h2><br>' 
+	print "<a href = 'clientoptions.py'> Volver a opciones </a>"  
       else:
 	cons = cons+1
         codeTran=idClient+"-"+str(cons)
         
         print '<div class="well">'
         print '<form action="/cgi-bin/savetran.py" method="post">'
-        print '<input type="hidden" name="codeTran" value="%s">' %codeTran
-        print '<input type="hidden" name="balance" value="%s">' %balance
+       
+       
         print '<div class="form-group">'
         print '  <label>Codigo Transaccion</label>' 
-        print '  <input type="text"  required class="form-control" value="%s" readonly="readonly"/>' %codeTran
+        print '  <input type="text" name="codeTran"  class="form-control" required/>' 
         print '</div>'
         
         print '<div class="form-group">'
@@ -51,11 +52,10 @@ if idClient != "0":
         print '<input type="submit" value="Enviar" class="btn btn-default"/>'
         print '</form>'
         print '</div>' 
-        print "<a href = 'clientoptions.py'> Volver a opciones </a>"
-   
-   
+        print "<a href = 'clientoptions.py'> Volver a opciones </a>"  
   except MySQLdb.Error, e:
     respon2 = 'Error en la generacion de la consulta'
+  
 else:    
   print '<h2> %s</h2><br>' % (respon) 
   print "<a href = '../loginclient.html'> Volver a login</a>"

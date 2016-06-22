@@ -14,7 +14,7 @@ if idClient!="0":
 
   db = connectDB()
   cursor = db.cursor()
-  cursor.execute("SELECT * FROM client WHERE state = 0")
+  cursor.execute("SELECT idClient, name,lastname,  email, amount FROM client WHERE state = 0")
   # fetch all of the rows from the query
   data = cursor.fetchall()
 
@@ -30,7 +30,7 @@ if idClient!="0":
       print '<td>' + row[3] + '</td>'
       print '<td>' + row[1] + '</td>'
       print '<td>' + row[2] + '</td>'
-      print '<td>' + str(row[5]) + '</td>'
+      print '<td>' + str(row[4]) + '</td>'
       print "<td><a href='clientupdate.py?cid=" + str(row[0]) + "&sta=1'>Aprobar</a>"
       print '<br/>'
       print "<a href='clientupdate.py?cid=" + str(row[0]) + "&sta=2'>Rechazar</a></td>"

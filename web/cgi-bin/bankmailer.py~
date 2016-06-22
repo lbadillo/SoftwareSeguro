@@ -20,9 +20,7 @@ def sendmail(clientId):
 		maxCode = row[7]
 		msg += 'Primer Codigo:'+str(clientId) + '-' + str(consec+1) + '\n'
 		msg += 'Ultimo Codigo:'+str(clientId) + '-' + str(maxCode) + '\n'
-		while consec <= maxCode:
-			msg += str(clientId) + '-' + str(consec) + '\n'
-			consec += 1
+		
 
 	# Credentials (if needed)
 	username = 'softwaresegurobanco@gmail.com'

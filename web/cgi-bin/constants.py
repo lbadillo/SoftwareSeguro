@@ -60,4 +60,24 @@ def getHeaderHtml(title):
 def getFooterHtml():
   print '</div>'
   
-  
+def getPinClient(correo):
+    total=0;
+    i=1
+    listcorreo=list(correo)
+    size=len(listcorreo)
+    for letter in listcorreo:
+        total= (i*ord(letter))+total+size;
+        i=i+1
+    total=total*total    
+    total= total % 999999999
+    return total
+
+def testToken(pin1,pin2, codTran, amount):
+    am= str(amount)
+    amount2 =am[:am.find(".")]
+    random=codTran[codTran.find("-")+1:]
+    cod2= long(pin1)+long(pin2) + (long(amount2) * (long(random)+61))
+    codTran2 =  str(cod2)+'-'+str(random);
+    return codTran == codTran2
+       
+    

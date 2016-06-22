@@ -8,18 +8,18 @@ def sendmail(clientId):
 	
 	db = connectDB()
 	cursor = db.cursor()
-	sql = "SELECT * FROM client WHERE idClient = '%d'" % (clientId)
+	sql = "SELECT pin,consecutive, maxcode, email  FROM client WHERE idClient = '%d'" % (clientId)
 	cursor.execute(sql)
 	# fetch all of the rows from the query
 	data = cursor.fetchall()
 
-	msg = 'Subject:Bienvenida BankSafe\n\nSu registro ha sido aprobado, bienvenido a BankSafe!!\n\n Ahora cuenta con los siguientes codigos de transaccion:\n\n'
+	msg = 'Subject:Bienvenida BankSafe\n\nSu registro ha sido aprobado, bienvenido a BankSafe!!\n\n Para generar transacciones debe utilizar nuestra aplicacion de generacion de tokens utilizando los siguiente datos:\n\n'
 	for row in data:
 		toaddrs = str(row[3])
-		consec = row[6]
-		maxCode = row[7]
-		msg += 'Primer Codigo:'+str(clientId) + '-' + str(consec+1) + '\n'
-		msg += 'Ultimo Codigo:'+str(clientId) + '-' + str(maxCode) + '\n'
+		pin = row[0]
+		maxCode = row[2]
+		msg += 'Numero de transacciones aprobadas:' + str(maxCode) + '\n'
+		msg += 'PIN: ' + str(pin) + '\n'
 		
 
 	# Credentials (if needed)
