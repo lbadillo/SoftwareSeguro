@@ -3,11 +3,39 @@
 import cgi, cgitb
 import os
 import Cookie
+from Crypto.Hash import SHA256
 cgitb.enable()
 
 def getSalt():
   return "St"
- 
+
+def getTimeCookie():
+  return 5
+  
+def generateSHA(value):
+    m= SHA256.new()
+    m.update(str(value))
+    return m.hexdigest()
+  
+  
+def setClientCookie(idClient):
+    c=Cookie.SimpleCookie()
+    c['idusuario']=idClient
+    c['idusuario']['expires']=getTimeCookie()
+    c['sessionclient']= generateSHA(idClient)
+    c['sessionclient']['expires']=getTimeCookie()
+    print c
+    print "Location: clientoptions.py\r\n"
+
+def setEmployeeCookie(idEmployee):
+    c=Cookie.SimpleCookie()
+    c['idemployee']=idEmployee
+    c['idemployee']['expires']=getTimeCookie()
+    c['sessionemployee']= generateSHA(idEmployee)
+    c['sessionemployee']['expires']=getTimeCookie()
+    print c 
+    print "Location: empmenu.py\r\n" 
+    
 def getClientCookie():
   idClient="0"
   if 'HTTP_COOKIE' in os.environ:
@@ -16,6 +44,13 @@ def getClientCookie():
     c.load(cookie_string)
     try:
       idClient=c['idusuario'].value
+      valor=c['sessionclient'].value
+      if(valor==generateSHA(idClient)):
+	  c['idusuario']['expires']=getTimeCookie()
+	  c['sessionclient']['expires']=getTimeCookie()
+	  print c 
+      else:
+	idClient['0']
     except KeyError:
       idClient="0"
   return idClient  
@@ -28,6 +63,13 @@ def getEmployeeCookie():
     c.load(cookie_string)
     try:
       idClient=c['idemployee'].value
+      valor=c['sessionemployee'].value
+      if(valor==generateSHA(idClient)):
+	  c['idemployee']['expires']=getTimeCookie()
+	  c['sessionemployee']['expires']=getTimeCookie()
+	  print c 
+      else:
+	idClient['0']
     except KeyError:
       idClient="0"
   return idClient  
@@ -73,11 +115,14 @@ def getPinClient(correo):
     return total
 
 def testToken(pin1,pin2, codTran, amount):
-    am= str(amount)
-    amount2 =am[:am.find(".")]
-    random=codTran[codTran.find("-")+1:]
-    cod2= long(pin1)+long(pin2) + (long(amount2) * (long(random)+61))
-    codTran2 =  str(cod2)+'-'+str(random);
-    return codTran == codTran2
+    try:
+      am= str(amount)
+      amount2 =am[:am.find(".")]
+      random=codTran[codTran.find("-")+1:]
+      cod2= long(pin1)+long(pin2) + (long(amount2) * (long(random)+61))
+      codTran2 =  str(cod2)+'-'+str(random);
+      return codTran == codTran2
+    except:
+      return False
        
     

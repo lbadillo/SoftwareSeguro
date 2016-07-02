@@ -8,20 +8,26 @@ cgitb.enable()
 respon = "Usuario No Registrado"
 idClient = constants.getEmployeeCookie()
 
-constants.getHeaderHtml( "Opciones Cliente")
+constants.getHeaderHtml( "Aprobar Transacciones")
 print '<div class="well">'
 if idClient!="0":
 
   form = cgi.FieldStorage()
+  
+  if form.getvalue('valor'):
+     valor = form.getvalue('valor')
+     transactionId= valor[2:]
+     state = valor[:1]
+  else:
+    clientId= '0'
+    state = '0'
 
-  transactionId = int(form.getvalue('tid'))
-  state = int(form.getvalue('sta'))
 
   db = connectDB()
 
   cursor = db.cursor()
 
-  sql = "UPDATE transactions SET state = '%d' WHERE idTransaction = '%d'" % (state, transactionId)
+  sql = "UPDATE transactions SET state = %s WHERE idTransaction = %s" % (state, transactionId)
   sql2 = "SELECT @idClientFrom:=idClientFrom, @idClientTo:=idClientTo, @flAmount:=amount,@intTypeTransaction:=typeTransaction FROM transactions WHERE idTransaction = '%d';" % (transactionId)
   sql3 = "UPDATE client SET amount = amount-@flAmount WHERE idClient = @idClientFrom;"
   sql4 = "UPDATE client SET amount = amount+@flAmount WHERE idClient = @idClientTo;"
@@ -40,10 +46,10 @@ if idClient!="0":
     respon= manageError(e.args[0], e.args[1])
     respcod=e.args[0]
 
-  print '<h2> %s</h2>' % (respon)
-  print "<a href='registrations.py'>Back to Approve registrations</a>"
+  print '<h3> %s</h3>' % (respon)
+  print "<a href='transactions.py'>Volver a Transacciones Pendientes</a>"
   print '<br/>'
-  print "<a href='transactions.py'>Back to Approve transactions</a>"
+ 
 
   db.close()
 else:

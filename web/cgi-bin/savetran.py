@@ -13,7 +13,7 @@ codeTran = form.getvalue('codeTran')
 amount= float(form.getvalue('amount'))
 typeTran = "2"
 destination = form.getvalue('destination')
-balance = float(form.getvalue('balance'))
+
 sql2="ok"
 state="0"
 amount2 = "-101"
@@ -95,6 +95,10 @@ constants.getFooterHtml()
 print '</body>'
 print '</html>'
 
-db.close()
+
+try:
+  db.close()
+except:
+  print ''
 
 

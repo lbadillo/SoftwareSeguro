@@ -21,28 +21,25 @@ db = connectDB()
 
 cursor = db.cursor()
 
-sql = "select idEmployee from employee where email = '%s' and password = '%s'"  % (e_mail,passcript)
+#sql = "select idEmployee from employee where email = '%s' and password = '%s'"  % (e_mail,passcript)
 
 try:
-  cursor.execute(sql)
+  cursor.execute("select idEmployee from employee where email = %s and password = %s" ,(e_mail,passcript))
   row = cursor.fetchone()
   if row is not None:
     idEmployee = row[0]
     respon="ok"
   else:
-    respon="Usuario Invalido"
+    respon="Usuario Invalido "
     
 except MySQLdb.Error, e:
-  respon="Usuario Invalido"
+  respon="Usuario Invalido "
 
 db.close()
 
 
 if idEmployee != "0":
-  c=Cookie.SimpleCookie()
-  c['idemployee']=idEmployee
-  print c 
-  print "Location: empmenu.py\r\n"
+  constants.setEmployeeCookie(idEmployee)
 else:
   constants.getHeaderHtml( "Control Usuarios")
   print "<h4>%s</h4><br>" %(respon)

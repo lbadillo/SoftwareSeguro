@@ -3,6 +3,7 @@ import MySQLdb
 import cgi, cgitb
 import crypt
 from connectdb import connectDB
+from xml.sax.saxutils import escape
 import constants
 cgitb.enable()
 
@@ -14,25 +15,32 @@ def manageError(cod, message):
 
 form = cgi.FieldStorage()
 
-first_name=form.getvalue('first_name')
+first_name=str(form.getvalue('first_name'))
+first_name = escape(first_name)
 last_name=form.getvalue('last_name')
+last_name = escape(last_name)
 e_mail=form.getvalue('e_mail')
+e_mail = escape(e_mail)
 password=form.getvalue('password')
 passcript= crypt.crypt(password,constants.getSalt())
 amount=form.getvalue('amount')
 pin = constants.getPinClient(e_mail)
+states='0'
+
+
 
 db = connectDB()
 
 cursor = db.cursor()
 
 
+constants.getHeaderHtml( "Nuevo Cliente")
 
 
-sql = "insert into client (name,lastName,email,password,pin, amount,state) values ('%s','%s','%s','%s','%s','%s','%d') " % (first_name,last_name,e_mail,passcript,pin,amount,0)
 
 try:
-  cursor.execute(sql)
+ 
+  cursor.execute( "insert into client (name,lastName,email,password,pin, amount,state) values (%s,%s,%s,%s,%s,%s,%s) " , (first_name,last_name,e_mail,passcript,pin,amount,states))
   db.commit()
   respcod = 0
   respon="Felicidades!!!!  Despues de efectuar el proceso de verificacion sera enviado un correo de bienvenida a nuestro banco"
@@ -41,7 +49,7 @@ except MySQLdb.Error, e:
   respon= manageError(e.args[0], e.args[1])
   respcod=e.args[0]
   
-constants.getHeaderHtml( "Nuevo Cliente")
+
 print '<div class="well">'
 print '<h3> %s</h3>' % (respon)
 if respcod == 0:

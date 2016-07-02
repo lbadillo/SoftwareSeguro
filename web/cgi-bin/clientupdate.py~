@@ -3,6 +3,7 @@ import MySQLdb
 import cgi, cgitb
 import constants
 from connectdb import connectDB
+import bankmailer
 cgitb.enable()
 
 respon = "Usuario No Registrado"
@@ -14,30 +15,31 @@ if idClient!="0":
 
   form = cgi.FieldStorage()
 
-  #clientId = self.request.GET.get('cid')
-  clientId = int(form.getvalue('cid'))
-  #state = self.request.GET.get('sta')
-  state = int(form.getvalue('sta'))
+  if form.getvalue('valor'):
+     valor = form.getvalue('valor')
+     clientId= valor[2:]
+     state = valor[:1]
 
   db = connectDB()
 
   cursor = db.cursor()
 
-  sql = "UPDATE client SET state = '%d' WHERE idClient = '%d'" % (state, clientId)
+  #sql = "UPDATE client SET state = %s WHERE idClient = %s" , (state, clientId)
 
   try:
-    cursor.execute(sql)
-    db.commit()
+ #   cursor.execute("UPDATE client SET state = %s WHERE idClient = %s" , (state, clientId))
+ #   db.commit()
     respcod = 0
-    respon="Registro Actualizado"
+ #   respon="Registro Actualizado"
+    respon='*****'+clientId +  '****'+ valor
   except MySQLdb.Error, e:
     db.rollback()
     respon= manageError(e.args[0], e.args[1])
     respcod=e.args[0]
 
-  #import bankmailer
-  #if state is 1:
-  #  bankmailer.sendmail(clientId)
+ 
+  if state is 1:
+    bankmailer.sendmail(clientId)
 
   print '<h2> %s</h2>' % (respon)
   print "<a href='registrations.py'>Volver Clientes Pendientes</a>"

@@ -37,7 +37,7 @@ if idClient != "0":
       print '</tr>'
     print '</table>' 
     print "<br>"
-  
+
   except MySQLdb.Error, e:
     print 'Error en la generacion de la consulta'
   print "<a href = 'clientoptions.py'> Volver a opciones </a>"      
@@ -48,6 +48,8 @@ constants.getFooterHtml()
 print '</body>'
 print '</html>'
 
-db.close()
-
+try:
+  db.close()
+except:
+  print ''
 

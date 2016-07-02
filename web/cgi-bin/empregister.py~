@@ -30,28 +30,26 @@ try:
   cursor.execute(sql)
   db.commit()
   respcod = 0
-  respon="Felicidades!! Bienvenido epleado a BankSafe!"
+  respon="Felicidades!! Registro exitoso a  BankSafe!"
 except MySQLdb.Error, e:
   db.rollback()
   respon= manageError(e.args[0], e.args[1])
   respcod=e.args[0]
   
-print "Content-type: text/html\r\n\r\n";
-print '<html>'
-print '<head>'
-print '<title>Registro Cliente</title>'
-print '</head>'
-print '<body>'
-print '<h2> %s</h2>' % (respon)
+
+constants.getHeaderHtml( "Nuevo Empleado")
+print '<div class="well">'
+print '<h3> %s</h3>' % (respon)
 if respcod == 0:
    print "<a href = '../emplogin.html'> Volver a login</a>"
  
 else:
-   print "<a href = '../register.html'> Volver a registro</a>"
-  
+   print "<a href = '../empregister.html'> Volver a registro</a>"
+print '</div>'  
  
-  
+constants.getFooterHtml()  
 print '</body>'
 print '</html>'
+ 
 
 db.close()

@@ -1,5 +1,2 @@
-Valor		Cliente Destino (e-mail)
-20		uno@uno.com
-10001		uno@uno.com
-100000		uno@uno.com
-30		tres@tres.com
+000000120dos@dos2.com     1gfhagsdfkjhag ksfgkajhsdgfkajhgfl kjgfkjahsgfkjahgsfkjhagsk fjghaksjhfg kajhsgdf kjahgsfkjhagskjdfhgak sjdfghkajhsgfk ahjgsdfkjhagskdf gaksjhfg kajshgfkjahsgfkajhsgdfkjhgskdfg aksjdhfgkajhsgdf
+000000120dos@dos.com

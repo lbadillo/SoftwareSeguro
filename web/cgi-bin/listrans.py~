@@ -10,12 +10,12 @@ idClient = constants.getClientCookie()
 respon ="Usuario No Registrado"
 
     
-constants.getHeaderHtml( "Datos Cliente")
+constants.getHeaderHtml( "Transacciones")
 if idClient != "0":
   db = connectDB()
   cursor = db.cursor()
   
-  sql = "select name  as Nombre, lastname as Apellido, Email as Usuario, amount as Saldo  from client where idclient = '%s' "  % (idClient)
+  sql = "select Code as Codigo, Amount as Valor, Origin as Origen, Destination as Destino, State as Estado from vw_transactionlist where idclient = '%s' "  % (idClient)
   try:
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -37,7 +37,7 @@ if idClient != "0":
       print '</tr>'
     print '</table>' 
     print "<br>"
-
+  
   except MySQLdb.Error, e:
     print 'Error en la generacion de la consulta'
   print "<a href = 'clientoptions.py'> Volver a opciones </a>"      
@@ -48,6 +48,8 @@ constants.getFooterHtml()
 print '</body>'
 print '</html>'
 
-db.close()
+try:
+  db.close()
+
 
 

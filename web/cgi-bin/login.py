@@ -27,10 +27,10 @@ cursor = db.cursor()
 
 
 
-sql = "select idClient from client where email = '%s' and password = '%s' and state = 1"  % (e_mail,passcript)
+#sql = "select idClient from client where email = '%s' and password = '%s' and state = 1"  % (e_mail,passcript)
 
 try:
-  cursor.execute(sql)
+  cursor.execute("select idClient from client where email = %s and password = %s and state = 1"  , (e_mail,passcript))
   row = cursor.fetchone()
   if row is not None:
     idClient = row[0]
@@ -45,9 +45,7 @@ db.close()
 
 
 if idClient>0:
-  c=Cookie.SimpleCookie()
-  c['idusuario']=idClient
-  print c 
+  constants.setClientCookie(idClient)
   print "Location: clientoptions.py\r\n"
 else:
   constants.getHeaderHtml( "Control Usuarios")

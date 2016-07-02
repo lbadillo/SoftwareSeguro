@@ -13,9 +13,15 @@ print '<div class="well">'
 if idClient!="0":
 
   form = cgi.FieldStorage()
+  
+  if form.getvalue('valor'):
+     valor = form.getvalue('valor')
+     transactionId= int(valor[2:])
+     state = int(valor[:1])
+  else:
+    clientId= '0'
+    state = '0'
 
-  transactionId = int(form.getvalue('tid'))
-  state = int(form.getvalue('sta'))
 
   db = connectDB()
 

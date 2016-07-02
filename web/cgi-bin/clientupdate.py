@@ -15,19 +15,22 @@ if idClient!="0":
 
   form = cgi.FieldStorage()
 
-  #clientId = self.request.GET.get('cid')
-  clientId = int(form.getvalue('cid'))
-  #state = self.request.GET.get('sta')
-  state = int(form.getvalue('sta'))
+  if form.getvalue('valor'):
+     valor = form.getvalue('valor')
+     clientId= valor[2:]
+     state = valor[:1]
+  else:
+    clientId= '0'
+    state = '0'
 
   db = connectDB()
 
   cursor = db.cursor()
 
-  sql = "UPDATE client SET state = '%d' WHERE idClient = '%d'" % (state, clientId)
+  #sql = "UPDATE client SET state = %s WHERE idClient = %s" , (state, clientId)
 
   try:
-    cursor.execute(sql)
+    cursor.execute("UPDATE client SET state = %s WHERE idClient = %s" , (state, clientId))
     db.commit()
     respcod = 0
     respon="Registro Actualizado"

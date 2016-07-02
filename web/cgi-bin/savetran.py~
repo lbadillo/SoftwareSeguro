@@ -13,7 +13,7 @@ codeTran = form.getvalue('codeTran')
 amount= float(form.getvalue('amount'))
 typeTran = "2"
 destination = form.getvalue('destination')
-balance = float(form.getvalue('balance'))
+
 sql2="ok"
 state="0"
 amount2 = "-101"
@@ -33,8 +33,7 @@ if idClient != "0":
             pin1=rowb[0]
             balance = rowb[1]
             total= float(balance)-amount
-            
-            print total
+
         else:
             pin1="-1"
             total=-1

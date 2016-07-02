@@ -48,6 +48,9 @@ constants.getFooterHtml()
 print '</body>'
 print '</html>'
 
-db.close()
+try:
+  db.close()
+except:
+  print ''
 
 
